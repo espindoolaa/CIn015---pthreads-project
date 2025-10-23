@@ -106,8 +106,6 @@ void* usuario_thread(void* arg) {
 // --------------------------- thread impressora ---------------------------
 
 void* impressora_thread(void* arg) {
-    (void)arg;
-
     while (1) {
         pthread_mutex_lock(&mutex_fila);
 
@@ -164,7 +162,7 @@ int main() {
     // aguarda o encerramento da impressora
     pthread_join(impressora, NULL);
 
-    // liberação dos recursos utilizads: mutex e variável condicional.
+    // liberação dos recursos utilizads: mutex e variável condicional
     pthread_mutex_destroy(&mutex_fila);
     pthread_cond_destroy(&cond_nonempty);
   
