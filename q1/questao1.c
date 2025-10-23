@@ -9,7 +9,7 @@ incremento mediante 4 threads funcionou normalmente.
 #include <stdio.h>
 #include <pthread.h>
 
-#define NUM_THREADS 5
+#define NUM_THREADS 4
 #define MAX 1000000
 
 long contador = 0;
