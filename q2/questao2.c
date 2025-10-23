@@ -1,3 +1,14 @@
+/* --------------------------- ideia geral da resolução ---------------------------
+   - Existem P threads produtoras e C threads consumidoras.
+   - Cada buffer tem tamanho fixo (BUFFER_SIZE) e é protegido por mutex próprio.
+   - As variáveis de condição "empty"' e "fill" controlam quando o buffer está
+     cheio ou vazio, evitando acessos concorrentes incorretos.
+   - Produtores escolhem aleatoriamente um buffer e tentam inserir um item.
+     Se o buffer estiver cheio, tentam outro após uma breve espera.
+   - Consumidores fazem o inverso: escolhem aleatoriamente um buffer e tentam retirar um item.
+     Se estiver vazio, aguardam ou tentam outro buffer.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -22,7 +33,7 @@ typedef struct {
 
 Buffer buffers[B];
 
-// Inicializaç~ao dos buffers
+// Inicialização dos buffers
 void init_buffers() {
     for (int i = 0; i < B; i++) {
         buffers[i].items = 0;
@@ -58,7 +69,7 @@ void put_item(int id, int item) {
     }
 }
 
-// Pega um item de algum buffer que tenha itens
+// Pega um item de algum buffer que não tá vazio
 int get_item(int id) {
     int b;
     int item;
